@@ -6,7 +6,7 @@ class Search extends React.Component {
             <div className="container mt-2">
                 <div className="row m-2">
                     <div className="input-group mb-3 col-md-6 offset-md-3">
-                        <input type="text" name="search" id="search" className="form-control" placeholder="Search image by keywords..." onKeyUp={(e) => { this.props.search(e) }} />
+                        <input type="text" name="search" id="search" className="form-control" placeholder="Search image by keywords..." onChange={(e) => { this.props.search(e) }} />
                         <div className="input-group-append">
                             <button type="submit" className="btn btn-dark" id="search"><i className="fas fa-search" onClick={(e) => { this.props.searchButton(e) }}></i></button>
                         </div>

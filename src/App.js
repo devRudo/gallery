@@ -45,13 +45,16 @@ class App extends React.Component {
   }
 
   search = (e) => {
-    if (e.keyCode === 13) {
-      let queryString = e.target.value;
-      if (e.target.value !== '') {
-        this.setState({
-          url: `https://pixabay.com/api?safesearch=true&per_page=52&q=${queryString}&key=16036858-ce9c6eff58bc49d388c47d990`
-        });
-      }
+    let queryString = e.target.value;
+    if (e.target.value !== '') {
+      this.setState({
+        url: `https://pixabay.com/api?safesearch=true&per_page=52&q=${queryString}&key=16036858-ce9c6eff58bc49d388c47d990`
+      });
+    }
+    else {
+      this.setState({
+        url: `https://pixabay.com/api?safesearch=true&per_page=52&key=16036858-ce9c6eff58bc49d388c47d990`
+      })
     }
   }
 
