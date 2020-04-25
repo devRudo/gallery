@@ -18,10 +18,6 @@ class App extends React.Component {
     this.fetchImages(this.state.url);
   }
 
-  componentDidUpdate() {
-    this.fetchImages(this.state.url);
-  }
-
   fetchImages = async (url) => {
     try {
       let response = await fetch(url)
@@ -40,7 +36,10 @@ class App extends React.Component {
     e.target.classList.toggle('active');
     Array.from(e.target.parentNode.childNodes).filter(elem => elem !== e.target).forEach(elem => elem.classList.remove('active'));
     this.setState({
-      url: `https://pixabay.com/api?safesearch=true&per_page=52&q=${queryString}&key=16036858-ce9c6eff58bc49d388c47d990`
+      url: `https://pixabay.com/api?safesearch=true&per_page=52&q=${queryString}&key=16036858-ce9c6eff58bc49d388c47d990`,
+      loading: true
+    }, () => {
+      this.fetchImages(this.state.url);
     });
   }
 
@@ -49,11 +48,15 @@ class App extends React.Component {
     if (e.target.value !== '') {
       this.setState({
         url: `https://pixabay.com/api?safesearch=true&per_page=52&q=${queryString}&key=16036858-ce9c6eff58bc49d388c47d990`
+      }, () => {
+        this.fetchImages(this.state.url);
       });
     }
     else {
       this.setState({
         url: `https://pixabay.com/api?safesearch=true&per_page=52&key=16036858-ce9c6eff58bc49d388c47d990`
+      }, () => {
+        this.fetchImages(this.state.url);
       })
     }
   }
@@ -63,52 +66,14 @@ class App extends React.Component {
     if (e.target.value !== '') {
       this.setState({
         url: `https://pixabay.com/api?safesearch=true&per_page=52&q=${queryString}&key=16036858-ce9c6eff58bc49d388c47d990`
+      }, () => {
+        this.fetchImages(this.state.url);
       });
     }
   }
 
   render() {
     const { images } = this.state;
-    if (this.state.loading) {
-      return (
-        <div className="App">
-          <header>
-            <h1>SnapShoot Gallery App</h1>
-          </header>
-          <main>
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="row">
-                    <h1>Loading .... </h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </main>
-        </div>
-      )
-    }
-    if (!this.state.images) {
-      return (
-        <div className="App">
-          <header>
-            <h1>SnapShoot Gallery App</h1>
-          </header>
-          <main>
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="row">
-                    <h1>No images</h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </main>
-        </div>
-      )
-    }
     return (
       <div className="App">
         <header>
@@ -121,9 +86,10 @@ class App extends React.Component {
             <div className="row">
               <div className="col-md-12">
                 <div className="row">
-                  {images.map((image) =>
-                    <Image key={image.id} src={image.webformatURL} />
-                  )}
+                  {this.state.loading ? <h1>Loading .... </h1> : !this.state.images ? <h1>No images</h1> :
+                    images.map((image) => <Image key={image.id} src={image.webformatURL} />
+                    )
+                  }
                 </div>
               </div>
             </div>
